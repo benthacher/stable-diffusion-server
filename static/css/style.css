@@ -1,0 +1,19 @@
+body {
+    margin: 0;
+    padding: 0;
+    align-content: center;
+    align-items: center;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.output-text {
+    text-align: left;
+    height: 200px;
+    overflow: scroll;
+    background: #ccc;
+}
+
+/* .prompt {
+
+} */

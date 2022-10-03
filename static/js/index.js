@@ -5,9 +5,15 @@ const runButton = document.querySelector('.run');
 const output = document.querySelector('.output');
 const outputText = document.querySelector('.output-text');
 
-runButton.onclick = () => {
+function sendPrompt() {
     socket.emit('send-prompt', promptElem.value);
     console.log(`Sent prompt "${promptElem.value}"`);
+}
+
+runButton.onclick = sendPrompt;
+promptElem.onkeydown = e => {
+    if (e.key == 'Enter')
+        sendPrompt(); 
 };
 
 socket.on('run-status', status => {
@@ -23,9 +29,26 @@ socket.on('run-status', status => {
     }
 });
 
-socket.on('stdout', line => {
-    outputText.innerHTML += line;
-});
+function log(type='stdout') {
+    return function(line) {
+        // don't log if the string is empty
+        if (line.trim().length == 0)
+            return;
+        // carriage return
+        if (line.includes('\u001b[A\u001b[A') && outputText.hasChildNodes())
+            outputText.removeChild(outputText.lastChild);
+        
+        if (line.includes('%'))
+            document.title = line;
+
+        outputText.innerHTML += `<span style="color:${type == 'stderr' ? "red" : "black"};">${line.replaceAll('\n', '')}<br></span>`;
+        outputText.scrollTop = outputText.scrollHeight;
+    }
+}
+
+socket.on('stdout', log('stdout'))
+
+socket.on('stderr', log('stderr'));
 
 socket.on('output', data => {
     const { filename, image } = data;

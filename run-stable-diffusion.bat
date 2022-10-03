@@ -1,18 +1,18 @@
 @echo off
-
 @REM Make sure 1st argument is here
-IF [%1]==[] exit
+if [%1]==[] goto :eof
 
 @REM Activate anaconda
-<anaconda_dir>/Scripts/activate.bat <anaconda_dir>
+call C:\Users\Ben\anaconda3\Scripts\activate.bat C:\Users\Ben\anaconda3
 
 @REM Move to the stable diffusion directory
-cd C:\Users\Ben\Projects\ai\stable-diffusion
+cd "C:\Users\Ben\Projects\ai\stable-diffusion"
 
 @REM Activate the conda environment
-conda activate ldm
+call conda activate ldm
 
+@echo on
 @REM Run stable diffusion with the first argument to this script
-python scripts/txt2img.py --plms --n_samples 1 --prompt "%1"
+python scripts/txt2imghd.py --W 512 --H 512 --n_iter 5 --seed 7000 --prompt %1 
 
 @REM When this script exits, the new images are in the output directory

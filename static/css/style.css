@@ -8,12 +8,56 @@ body {
 }
 
 .output-text {
+    width:80%; 
+    margin:0 auto;
     text-align: left;
     height: 200px;
-    overflow: scroll;
+    overflow-y: scroll;
+    white-space:pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-all;
     background: #ccc;
+    white-space: -moz-pre-wrap; /* Firefox */   
 }
 
-/* .prompt {
+div.gallery {
+    border: 1px solid #ccc;
+}
 
-} */
+div.gallery:hover {
+    border: 1px solid #777;
+}
+
+div.gallery img {
+    width: 100%;
+    height: auto;
+}
+
+div.desc {
+    padding: 15px;
+    text-align: center;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.responsive {
+    padding: 0 6px;
+    float: left;
+    width: 24.99999%;
+}
+
+@media only screen and (max-width: 700px) {
+    .responsive {
+        width: 49.99999%;
+        margin: 6px 0;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .responsive {
+        width: 100%;
+    }
+}
